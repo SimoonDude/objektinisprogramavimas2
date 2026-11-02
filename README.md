@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Objektinis programavimas — Studentų galutinių balų skaičiavimas
 
 ## Projekto aprašymas
@@ -191,3 +192,7 @@ Norėčiau netolimoje ateityje pereiti prie `template`'u. Šiuo metu egzistuoja 
 ### Papildomi komentarai
 
 <img width="656" height="50" alt="{009B9741-B639-469F-80A3-92D4BEF856D2}" src="https://github.com/user-attachments/assets/6561230b-3892-4733-98d2-fe40ba4f4ff4" />
+=======
+# objektinisprogramavimas2
+Objektinis programavimas. Antroji užduotis.
+>>>>>>> origin/main
