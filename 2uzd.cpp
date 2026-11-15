@@ -1,6 +1,5 @@
-#include "1uzd_def.h"
-#include "1uzd_papildai.h"
-#include "1uzd_list.h"
+#include "Studentas.hpp"
+#include "Papildai.hpp"
 
 using namespace std;
 
@@ -50,20 +49,19 @@ int main() {
             }
         }
     }
-    while (true && c == 5) {
-        cout << "Naudoti std::vector (1) ar std::list (2) ?: ";
-        string choice; cin >> choice;
-        try {
-            l = stoi(choice);
-            if (l == 1 || l == 2) {break;}
-            else {cout << "\n\n\n"; continue;}
-        } catch (...) {
-            cout << "\n\n\n"; continue;
-        }
-    }
+    // while (true && c == 5) {
+    //     cout << "Naudoti std::vector (1) ar std::list (2) ?: ";
+    //     string choice; cin >> choice;
+    //     try {
+    //         l = stoi(choice);
+    //         if (l == 1 || l == 2) {break;}
+    //         else {cout << "\n\n\n"; continue;}
+    //     } catch (...) {
+    //         cout << "\n\n\n"; continue;
+    //     }
+    // }
 
-    vector<student> studentai;
-    list<l_student> l_studentai;
+    vector<Studentas> studentai;
 
     if (c == 3 || c == 4) { // pasirinkta generuoti, kiek studentu?
         cout << "pazymiu/ivertinimu kiekis: "; 
@@ -77,8 +75,8 @@ int main() {
     }   
     else if (c == 5) {// Testavimas su dideliu studentu kiekiu
         int r; kaip_rusiuoti(r);
-        if (l == 1) debugger(studentai, r);
-        else if (l == 2) debugger(l_studentai, r);        
+        debugger(studentai, r);
+        // else if (l == 2) debugger(l_studentai, r);        
         return 0;
     }
     if (c == 4) { // jeigu pasirinkta generuoti viska
@@ -87,7 +85,7 @@ int main() {
     }
     
     while (c == 1 || c == 3) { // while pats arba paz. generuoti
-        student studentas;
+        Studentas studentas;
         cout << "vardas pavarde:\n";
         if (!get_name_input(studentas.vardas, studentas.pavarde)) {
             if (studentai.size() == 0) {cout << "nera studentu, programa baigia darba.\n"; return 0;}
