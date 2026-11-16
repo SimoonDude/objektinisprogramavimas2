@@ -15,6 +15,9 @@ std::istream& Studentas :: readStudent(std::istream& is) {
         is.setstate(std::ios::failbit);
         return is;
     }
+    if (is.eof()) {
+        is.clear();
+    }
     vardas_ = std::move(vardas);
     pavarde_ = std::move(pavarde);
 
@@ -51,7 +54,7 @@ void Studentas::randominiai_pazymiai (const int &k) {
     }
 }
 
-void Studentas::imti_random_varda_pavarde (const dict &v_p) {
+void Studentas::imti_random_varda_pavarde (dict& v_p) {
     std::random_device rd;  // a seed source for the random number engine
     std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()
     std::uniform_int_distribution<> distrib(0, 1); // cia istraukiau is cppreference.com
@@ -69,22 +72,23 @@ void Studentas::imti_random_varda_pavarde (const dict &v_p) {
 }
 
 void Studentas::print (std::ostream& os) const {
-    os << left << setw(stulpelio_plotis(vardas_, 30)) << vardas_
-            << setw(stulpelio_plotis(pavarde_, 30)) << pavarde_
-            << setw(20) << vidurkis_val_
-            << setw(20) << mediana_val_ << '\n';
+    os << std::left << std::setw(stulpelio_plotis(vardas_, 30)) << vardas_
+            << std::setw(stulpelio_plotis(pavarde_, 30)) << pavarde_
+            << std::setw(20) << vidurkis_val_
+            << std::setw(20) << mediana_val_ << '\n';
 }
 
-void Studentas::vidurkis () {
-    if (nd_.empty()) {vidurkis_val_ = egz_ * .6; return;}
+double Studentas::vidurkis () {
+    if (nd_.empty()) {vidurkis_val_ = egz_ * .6; return vidurkis_val_;}
     double galutinis = 0;
     for (int pazymys : nd_) galutinis += pazymys;
     galutinis /= nd_.size();
     vidurkis_val_ = galutinis * .4 + egz_ * .6;
+    return vidurkis_val_;
 }
 
-void Studentas::mediana () { // ikelti funkcijas i struktura ?
-    if (nd_.empty()) {mediana_val_ = egz_ * .6; return;}
+double Studentas::mediana () { // ikelti funkcijas i struktura ?
+    if (nd_.empty()) {mediana_val_ = egz_ * .6; return mediana_val_;}
     auto pazymiai = nd_;
     sort(pazymiai.begin(), pazymiai.end());\
     double mediana;
@@ -95,4 +99,5 @@ void Studentas::mediana () { // ikelti funkcijas i struktura ?
         mediana = (pazymiai[vidurys - 1] + pazymiai[vidurys]) / 2.0;
     }
     mediana_val_ = mediana * .4 + egz_ * .6;
+    return mediana_val_;
 }

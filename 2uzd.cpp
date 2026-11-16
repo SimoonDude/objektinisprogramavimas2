@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    int c, k = 0, l, paz_k;
+    int c, k = 0, paz_k;
     string failo_pav = "0"; 
 
     // gal iskelti meniu i papildus ar dar kur
@@ -87,7 +87,7 @@ int main() {
     while (c == 1 || c == 3) { // while pats arba paz. generuoti
         Studentas studentas;
         cout << "vardas pavarde:\n";
-        if (!get_name_input(studentas.vardas, studentas.pavarde)) {
+        if (!get_name_input(studentas)) {
             if (studentai.size() == 0) {cout << "nera studentu, programa baigia darba.\n"; return 0;}
             break;
         }
