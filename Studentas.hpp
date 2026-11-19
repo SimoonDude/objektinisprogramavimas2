@@ -22,8 +22,16 @@ public:
         egz_ = 0;
         nd_ = std::vector<int>();
     }
+    // Studentas(inputstream) => constructs and reads student data from inputstream
     explicit Studentas (std::istream& is) { readStudent(is); }; // constructor that reads student data from an input stream
-    // rule of three II.
+    /*
+    Rule of three realizacija labai paprasta:
+    1. Destruktorius defaultinis nes Studentas naudoja tik std::string ir std::vector, kurie turi savo destruktorius;
+    2. Kopijavimo konstruktorius ima argumenta ana, ir inicializuoja narius su to objekto nariais;
+    3. Kopijavimo priskyrimo operatorius patikrina ar objektai vienodi, jei ne, priskiria narius is kito objekto.
+    */
+    // destructor
+    ~Studentas() {};
     // copy constructor
     Studentas (const Studentas& other) : 
         vardas_(other.vardas_), 
@@ -33,6 +41,18 @@ public:
         vidurkis_val_(other.vidurkis_val_), 
         mediana_val_(other.mediana_val_) 
     {}
+    // copy assignment operator
+    Studentas& operator=(const Studentas& other) {
+        if (this != &other) {
+            vardas_ = other.vardas_;
+            pavarde_ = other.pavarde_;
+            egz_ = other.egz_;
+            nd_ = other.nd_;
+            vidurkis_val_ = other.vidurkis_val_;
+            mediana_val_ = other.mediana_val_;
+        }
+        return *this;
+    }
     // setters
     inline void setVardas (const std::string& vardas) { vardas_ = vardas; }
     inline void setPavarde (const std::string& pavarde) { pavarde_ = pavarde; }
@@ -54,34 +74,19 @@ public:
     double mediana ();
 
 
-    void print (std::ostream& os) const;
+    void spausdinti (std::ostream& os) const;
     
     std::istream& readStudent(std::istream&); // reads student data from an input stream
     void duomenu_ivedimas ();
     friend std::istream& operator>>(std::istream& is, Studentas& s) { return s.readStudent(is); } // overloads the >> operator for input streams
-    friend std::ostream& operator<<(std::ostream& os, const Studentas& s) { s.print(os); return os; } // overloads the << operator for output streams
+    friend std::ostream& operator<<(std::ostream& os, const Studentas& s) { s.spausdinti(os); return os; } // overloads the << operator for output streams
     
-    // rule of three III.
-    // copy assignment operator
-    Studentas& operator=(const Studentas& other) {
-        if (this != &other) {
-            vardas_ = other.vardas_;
-            pavarde_ = other.pavarde_;
-            egz_ = other.egz_;
-            nd_ = other.nd_;
-            vidurkis_val_ = other.vidurkis_val_;
-            mediana_val_ = other.mediana_val_;
-        }
-        return *this;
-    }
-    
+
     friend bool get_name_input (Studentas& s); // get input string; if `-1` break loop 
 
     friend bool vargsunas (const Studentas& s);
     friend bool pagyrunas (const Studentas& s);
-
-    // rule of three I.
-    ~Studentas() {}
+    
 };
 
 bool get_int_input (int &balas, bool minusvienas = false); // paima int inputa is userio, grazina `True` jeigu pavyko; `False` jeigu ne.

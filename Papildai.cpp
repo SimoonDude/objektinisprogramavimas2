@@ -84,7 +84,7 @@ int stulpelio_plotis (const std::string& tekstas, int plotis) {
 }
 
 // last flag = debugger or not
-void spausdinti_i_faila (const std::vector<Studentas>& studentai, const std::string& failo_pav, bool debug) {
+void spausdinti (const std::vector<Studentas>& studentai, const std::string& failo_pav, bool debug) {
     auto start = std::chrono::high_resolution_clock::now();
     std::ofstream f(failo_pav);
     if (!f.is_open()) {
@@ -109,7 +109,7 @@ void spausdinti_i_faila (const std::vector<Studentas>& studentai, const std::str
 }
 
 // overloaded version -- more optimized
-void spausdinti_i_faila (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug) {
+void spausdinti (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug) {
     auto start = std::chrono::high_resolution_clock::now();
     std::ofstream f(failo_pav);
     if (!f.is_open()) {
@@ -132,7 +132,7 @@ void spausdinti_i_faila (const Studentas* begin, const Studentas* end, const std
     }
 }
 
-void spausdinti_i_terminal (const std::vector<Studentas>& studentai) {
+void spausdinti (const std::vector<Studentas>& studentai) {
     std::cout << std::left << std::setw(30) << "Vardas"
          << std::setw(30) << "Pavarde"
          << std::setw(20) << "Galutinis (vid.)"
@@ -176,11 +176,11 @@ void sutvarkyti_studentus (std::vector<Studentas>& studentai, const int &k, std:
     if (c == 0) kaip_rusiuoti(c);
     rusiuoti(studentai, c);
 
-    if (k == 1) {
-        spausdinti_i_terminal(studentai);
-    } else if (k == 2) {
-        spausdinti_i_faila(studentai, failo_pav);
-    } else if (k == 3) {
+    if (k == 1) { // terminal
+        spausdinti(studentai);
+    } else if (k == 2) { // file
+        spausdinti(studentai, failo_pav);
+    } else if (k == 3) { // debug
         auto start = std::chrono::high_resolution_clock::now();
 
         auto middle = std::partition(
@@ -191,8 +191,8 @@ void sutvarkyti_studentus (std::vector<Studentas>& studentai, const int &k, std:
 
         std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << " | Studentu skirstymas i dvi grupes uztruko: " << diff.count() << " s.\n";
-        spausdinti_i_faila(studentai.data(), studentai.data() + (middle - studentai.begin()), failo_pav + "_islaike.txt", true);
-        spausdinti_i_faila(studentai.data() + (middle - studentai.begin()), studentai.data() + studentai.size(), failo_pav + "_neislaike.txt", true);
+        spausdinti(studentai.data(), studentai.data() + (middle - studentai.begin()), failo_pav + "_islaike.txt", true);
+        spausdinti(studentai.data() + (middle - studentai.begin()), studentai.data() + studentai.size(), failo_pav + "_neislaike.txt", true);
     }
 }
 

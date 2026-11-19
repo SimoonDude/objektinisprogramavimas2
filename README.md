@@ -19,6 +19,9 @@ Projekto metu realizuojamas studentų duomenų įvedimas, apdorojimas, grupavima
 - Pereita prie `class` tipo objekto studentas
 - Įvestos optimizacijos 
 
+### `v1.2`
+
+- Implementuota "Rule Of Three"
 
 ## Naudojimosi instrukcija
 
@@ -32,6 +35,8 @@ Projekto metu realizuojamas studentų duomenų įvedimas, apdorojimas, grupavima
 5. Pasirinkti galutinio balo rūšiavimo būdą.
 6. Peržiūrėti apskaičiuotus rezultatus ir studentų suskirstymą į kategorijas.
 7. Jeigu norima, ištestuoti programos veikimo spartą su "Debug" pasirinkimu ir failais `benchmark-data/`.
+
+
 
 ## Studentų skirstymo strategijos
 

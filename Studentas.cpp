@@ -1,7 +1,7 @@
 #include "Studentas.hpp"
 #include "Papildai.hpp"
 
-std::istream& Studentas :: readStudent(std::istream& is) {
+std::istream& Studentas::readStudent(std::istream& is) {
     std::string vardas, pavarde;
     if(!(is >> vardas >> pavarde)) {
         return is;
@@ -69,7 +69,7 @@ void Studentas::imti_random_varda_pavarde (dict& v_p) {
     }
 }
 
-void Studentas::print (std::ostream& os) const {
+void Studentas::spausdinti (std::ostream& os) const {
     os << std::left << std::setw(stulpelio_plotis(vardas_, 30)) << vardas_
             << std::setw(stulpelio_plotis(pavarde_, 30)) << pavarde_
             << std::setw(20) << vidurkis_val_

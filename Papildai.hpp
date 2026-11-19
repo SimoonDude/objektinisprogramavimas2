@@ -16,9 +16,9 @@ void rusiuoti (std::vector<Studentas>& studentai, const int& c);
 
 void generuoti_studentus (const int &paz_k, const int &k, const std::string &failo_pav);
 
-void spausdinti_i_terminal (const std::vector<Studentas>& studentai);
-void spausdinti_i_faila (const std::vector<Studentas>& studentai, const std::string& failo_pav, bool debug = false);
-void spausdinti_i_faila (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug = false);
+void spausdinti (const std::vector<Studentas>& studentai);
+void spausdinti (const std::vector<Studentas>& studentai, const std::string& failo_pav, bool debug = false);
+void spausdinti (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug = false);
 
 void skaityti_is_failo (std::vector<Studentas> &studentai, const std::string &failo_pav);
 
