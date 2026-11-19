@@ -23,6 +23,16 @@ public:
         nd_ = std::vector<int>();
     }
     explicit Studentas (std::istream& is) { readStudent(is); }; // constructor that reads student data from an input stream
+    // rule of three II.
+    // copy constructor
+    Studentas (const Studentas& other) : 
+        vardas_(other.vardas_), 
+        pavarde_(other.pavarde_), 
+        egz_(other.egz_), 
+        nd_(other.nd_), 
+        vidurkis_val_(other.vidurkis_val_), 
+        mediana_val_(other.mediana_val_) 
+    {}
     // setters
     inline void setVardas (const std::string& vardas) { vardas_ = vardas; }
     inline void setPavarde (const std::string& pavarde) { pavarde_ = pavarde; }
@@ -51,17 +61,27 @@ public:
     friend std::istream& operator>>(std::istream& is, Studentas& s) { return s.readStudent(is); } // overloads the >> operator for input streams
     friend std::ostream& operator<<(std::ostream& os, const Studentas& s) { s.print(os); return os; } // overloads the << operator for output streams
     
+    // rule of three III.
+    // copy assignment operator
+    Studentas& operator=(const Studentas& other) {
+        if (this != &other) {
+            vardas_ = other.vardas_;
+            pavarde_ = other.pavarde_;
+            egz_ = other.egz_;
+            nd_ = other.nd_;
+            vidurkis_val_ = other.vidurkis_val_;
+            mediana_val_ = other.mediana_val_;
+        }
+        return *this;
+    }
+    
     friend bool get_name_input (Studentas& s); // get input string; if `-1` break loop 
 
     friend bool vargsunas (const Studentas& s);
     friend bool pagyrunas (const Studentas& s);
 
-    ~Studentas () {}
+    // rule of three I.
+    ~Studentas() {}
 };
 
 bool get_int_input (int &balas, bool minusvienas = false); // paima int inputa is userio, grazina `True` jeigu pavyko; `False` jeigu ne.
-
-// unused ig
-bool compare(const Studentas& a, const Studentas& b);
-bool comparebyLastname(const Studentas& a, const Studentas& b);
-bool comparebyEgzaminas(const Studentas& a, const Studentas& b);
