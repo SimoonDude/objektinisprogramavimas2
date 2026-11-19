@@ -23,6 +23,10 @@ Projekto metu realizuojamas studentų duomenų įvedimas, apdorojimas, grupavima
 
 - Implementuota "Rule Of Three"
 
+### `v1.5`
+
+- Nauja abstraktuota bazinė klasė `Zmogus`, kuria išvedama `Studentas` klasė
+
 ## Naudojimosi instrukcija
 
 1. Paleisti programą pagal aukščiau pateiktas instrukcijas.
