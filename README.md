@@ -19,46 +19,6 @@ Projekto metu realizuojamas studentų duomenų įvedimas, apdorojimas, grupavima
 - Pereita prie `class` tipo objekto studentas
 - Įvestos optimizacijos 
 
----
-
-## Programos reikalavimai
-
-- C++ kompiliatorius, palaikantis C++17.
-- `make` įrankis (jei naudojamas Makefile).
-- Git – pasirinktinai, jei norima atsisiųsti ir valdyti projekto šaltinio kodą.
-
-## Įdiegimas ir kompiliavimas
-
-### 1. Projekto atsisiuntimas
-
-```bash
-git clone <REPOSITORY_URL>
-cd objektinisprogramavimas
-```
-
-### 2. Programos kompiliavimas
-
-Projekto šakniniame kataloge vykdyti:
-
-```bash
-make
-```
-
-Kompiliavimo metu sukuriamas vykdomasis failas `studentai`.
-
-### 3. Programos paleidimas
-
-Linux arba „GitHub Codespaces“ aplinkoje:
-
-```bash
-./studentai
-```
-
-Jeigu `make` nėra įdiegtas, programą galima kompiliuoti tiesiogiai:
-
-```bash
-g++ -std=c++17 -Wall -Wextra -O2 1uzd.cpp -o studentai
-```
 
 ## Naudojimosi instrukcija
 
@@ -88,12 +48,18 @@ $ vidurkis_{nd} * 0,4 + egzaminas * 0,6 \geq 5 $
 
 Eksperimentų tikslas – palyginti skirtingų programos įgyvendinimų strategijų veikimo spartą ir įvertinti, kokią įtaką daro įvariūs algoritmai bei konteineriai.
 
+Matavimo metu į laiką neįtraukiama įvairi informacijos manipuliacija (pvz.apskaičiavimas vidurkių) ar kitos operacijos, kurios nėra tiesiogiai susijusios su failais ar nėra intensyvios resursų ar laiko sąnaudos atžvilgiu.
+
+Kartu testuota ir kompiliatoriaus naudoti flag'ai ir jų prisidėjimas prie programos efektyvumo ar kt. Šalia nurodytas ir failo dydis, siekiant parodyti santykį tarp kompiliatoriaus optimizacijų ir failo dydžio.
+
+Rezultatai pateikiami lentelės pavidalu, išskirstyti naudotų studentų duomenų dydžiu ir pateiktas kiekvieno darbo punkto laikas sekundėmis.
+
 ### Testavimo aplinka
 
-- CPU: Intel Xeon Platinum 8370C, 2 branduoliai, 2,80 GHz
-- RAM: 7,8 GiB
-- Diskas: virtualus SSD (darbo disko `ROTA=0`)
-- Kompiliatorius: `g++`, `-std=c++17 -O2`
+- CPU: Intel Core Ultra 7 155H, 16 branduolių, 3.8 GHz
+- RAM: 16 GB DDR5
+- Diskas: 1 TB SSD NVME 
+- Kompiliatorius: `g++`, `-std=c++17`
 
 ### Naudoti duomenų rinkiniai
 
@@ -105,34 +71,53 @@ Eksperimentams naudojami iš anksto sugeneruoti failai:
 | 100 000 | `studentai100000.txt` | Vidutinio rinkinio testas |
 | 1 000 000 | `studentai1000000.txt` | Didelio rinkinio testas |
 
-Kiekviena strategija testuojama su tais pačiais duomenų rinkiniais. Kiekvienas bandymas atliekamas iš naujo paruošus pradinį konteinerį. Skaičiuojamas kelių bandymų laiko vidurkis.
+Kiekviena strategija testuojama su tais pačiais duomenų rinkiniais. Kiekvienas bandymas atliekamas iš naujo paruošus pradinį konteinerį. Skaičiuojamas 5 bandymų laiko vidurkis.
 
-Matavimo metu į laiką neįtraukiama įvairi informacijos manipuliacija (pvz.apskaičiavimas vidurkių) ar kitos operacijos, kurios nėra tiesiogiai susijusios su failais ar nėra intensyvios resursų ar laiko sąnaudos atžvilgiu.
+### Rezultatai, tiriantys `class` ir `struct` skirtumus 
 
-Kartu testuota ir kompiliatoriaus naudoti flag'ai ir jų prisidėjimas prie programos efektyvumo ar kt. Šalia nurodytas ir failo dydis, siekiant parodyti santykį tarp kompiliatoriaus optimizacijų ir failo dydžio.
-
-### Rezultatai
-
-Rezultatai pateikiami lentelės pavidalu, išskirstyti naudotų studentų duomenų dydžiu ir pateiktas kiekvieno darbo punkto laikas sekundėmis.
 #### Dabar, naudojant klases (`class`):
 | Studentų skaičius | Skaitymas | Skirstymas | Rašymas |
 |---:|---:|---:|---:|
-| 10,000 | 0.014672 | 0.000006 | 0.011366 |
-| 100,000 | 0.262006 | 0.000207 | 0.107046 |
-| 1,000,000 | 0.928797 | 0.004769 | 1.071378 |
+`O1`, 216 KB
+| 10,000 | 0.020826 | 0.000012 | 0.012536 |
+| 100,000 | 0.222845 | 0.000382 | 0.114582 |
+| 1,000,000 | 1.078042 | 0.005574 | 1.094501 |
+`O2`, 212 KB
+| 10,000 | 0.016937 | 0.000013 | 0.022052 |
+| 100,000 | 0.229391 | 0.000391 | 0.119202 |
+| 1,000,000 | 1.171074 | 0.004880 | 1.247350 |
+`O3`, 232 KB
+| 10,000 | 0.017131 | 0.000007 | 0.012343 |
+| 100,000 | 0.215817 | 0.000278 | 0.113277 |
+| 1,000,000 | 1.189372 | 0.004933 | 1.342095 |
+
 #### Pirminė realizacija, naudojanti struktūras (`struct`):
 | Studentų skaičius | Skaitymas | Skirstymas | Rašymas |
 |---:|---:|---:|---:|
+`O1`, 252 KB
+| 10,000 | 0.020339 | 0.000145 | 0.012311 |
+| 100,000 | 0.239246 | 0.002276 | 0.119872 |
+| 1,000,000 | 1.175576 | 0.028370 | 1.223900 |
+`O2`, 232 KB
 | 10,000 | 0.022739 | 0.001209 | 0.013092 |
 | 100,000 | 0.257048 | 0.012539 | 0.129134 |
 | 1,000,000 | 1.402110 | 0.124734 | 1.315480 |
+`O3`, 272 KB
+| 10,000 | 0.017633 | 0.000160 | 0.011547 |
+| 100,000 | 0.219756 | 0.002356 | 0.112539 |
+| 1,000,000 | 1.079966 | 0.027164 | 1.144756 |
+
 ## Išvados
 
-Pereiti prie klasių svarbu
+Pereiti prie klasių svarbu ir tinkama (?) Dedu klaustuką, nes galutinai nesupratau, koks gilus skirtumas yra. Atrodo pagrindinė motyvacija yra adaptuotis prie kitų programuotojų. Didžiausias greičio skirtumas atkeliavo nuo vėlesnių optimizacijų, kaip skaitymo ir rašymo funkcijų optimizacijos (`std::move` ir `*begin++`).
+
+Visvien galima išskirti pastebimą skirtumą – klasė efektyvesnė už struktūra, jeigu galima taip tiesmukiškai teigti.
+
+Dėl kompiliatoriaus flag'ų, `O2` yra geriausias pagal failo dydį, o `O1` pagal greitį.
 
 ### TODO
 
-Norėčiau netolimoje ateityje pereiti prie `template`'u. Šiuo metu egzistuoja skirtingos struktūros su `std::list` ir `std::vector`.
+---
 
 ### Papildomi komentarai
 
