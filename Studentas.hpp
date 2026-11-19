@@ -7,12 +7,14 @@
 #include <iomanip>
 #include <random>
 
+#include "Zmogus.hpp"
+
 #include "Dict.h"
 
-class Studentas {
+class Studentas : public Zmogus {
 private:
-    std::string vardas_;
-    std::string pavarde_;
+    // std::string vardas_;
+    // std::string pavarde_;
     int egz_ = 0;
     std::vector<int> nd_;
     double vidurkis_val_ = 0.0;
@@ -34,8 +36,7 @@ public:
     ~Studentas() {};
     // copy constructor
     Studentas (const Studentas& other) : 
-        vardas_(other.vardas_), 
-        pavarde_(other.pavarde_), 
+        Zmogus(other), 
         egz_(other.egz_), 
         nd_(other.nd_), 
         vidurkis_val_(other.vidurkis_val_), 
@@ -44,8 +45,7 @@ public:
     // copy assignment operator
     Studentas& operator=(const Studentas& other) {
         if (this != &other) {
-            vardas_ = other.vardas_;
-            pavarde_ = other.pavarde_;
+            Zmogus::operator=(other);
             egz_ = other.egz_;
             nd_ = other.nd_;
             vidurkis_val_ = other.vidurkis_val_;
@@ -54,13 +54,13 @@ public:
         return *this;
     }
     // setters
-    inline void setVardas (const std::string& vardas) { vardas_ = vardas; }
-    inline void setPavarde (const std::string& pavarde) { pavarde_ = pavarde; }
+    // inline void setVardas (const std::string& vardas) { vardas_ = vardas; }
+    // inline void setPavarde (const std::string& pavarde) { pavarde_ = pavarde; }
     inline void setEgz (int egz) { egz_ = egz; }
     inline void setNd (const std::vector<int>& nd) { nd_ = nd; }
     // getters
-    inline const std::string& vardas () const { return vardas_; }
-    inline const std::string& pavarde () const { return pavarde_; }
+    // inline const std::string& vardas () const { return vardas_; }
+    // inline const std::string& pavarde () const { return pavarde_; }
     inline int egz () const { return egz_; }
     inline const std::vector<int>& nd () const { return nd_; }
     inline double vidurkis_val () const { return vidurkis_val_; }
@@ -74,7 +74,7 @@ public:
     double mediana ();
 
 
-    void spausdinti (std::ostream& os) const;
+    void spausdinti (std::ostream& os) const override;
     
     std::istream& readStudent(std::istream&); // reads student data from an input stream
     void duomenu_ivedimas ();
@@ -82,11 +82,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Studentas& s) { s.spausdinti(os); return os; } // overloads the << operator for output streams
     
 
-    friend bool get_name_input (Studentas& s); // get input string; if `-1` break loop 
 
     friend bool vargsunas (const Studentas& s);
     friend bool pagyrunas (const Studentas& s);
-    
 };
 
 bool get_int_input (int &balas, bool minusvienas = false); // paima int inputa is userio, grazina `True` jeigu pavyko; `False` jeigu ne.

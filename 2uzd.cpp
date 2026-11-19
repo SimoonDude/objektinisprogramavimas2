@@ -86,6 +86,8 @@ int main(int argc, char* argv[]) {
 
     vector<Studentas> studentai;
 
+    static_assert(std::is_abstract_v<Zmogus>, "Zmogus class should be abstract");
+
     if (c == 3 || c == 4) { // pasirinkta generuoti, kiek studentu?
         cout << "pazymiu/ivertinimu kiekis: "; 
         while (true) if (!get_int_input(paz_k)) continue; else break;

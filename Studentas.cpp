@@ -19,8 +19,8 @@ std::istream& Studentas::readStudent(std::istream& is) {
     if (is.eof()) {
         is.clear();
     }
-    vardas_ = std::move(vardas);
-    pavarde_ = std::move(pavarde);
+    Zmogus::setVardas(std::move(vardas));
+    Zmogus::setPavarde(std::move(pavarde));
 
     egz_ = nd.back();
     nd.pop_back();
@@ -59,19 +59,19 @@ void Studentas::imti_random_varda_pavarde (dict& v_p) {
     if (distrib(gen) == 0) { // vyras
         std::uniform_int_distribution<> distrib_vardas(0, v_p.vardai_vyr.size() - 1);
         std::uniform_int_distribution<> distrib_pavarde(0, v_p.pavardes_vyr.size() - 1);
-        vardas_ = v_p.vardai_vyr[distrib_vardas(gen)];
-        pavarde_ = v_p.pavardes_vyr[distrib_pavarde(gen)];
+        Zmogus::setVardas(v_p.vardai_vyr[distrib_vardas(gen)]);
+        Zmogus::setPavarde(v_p.pavardes_vyr[distrib_pavarde(gen)]);
     } else { // moteris
         std::uniform_int_distribution<> distrib_vardas(0, v_p.vardai_mot.size() - 1);
         std::uniform_int_distribution<> distrib_pavarde(0, v_p.pavardes_mot.size() - 1);
-        vardas_ = v_p.vardai_mot[distrib_vardas(gen)];
-        pavarde_ = v_p.pavardes_mot[distrib_pavarde(gen)];
+        Zmogus::setVardas(v_p.vardai_mot[distrib_vardas(gen)]);
+        Zmogus::setPavarde(v_p.pavardes_mot[distrib_pavarde(gen)]);
     }
 }
 
 void Studentas::spausdinti (std::ostream& os) const {
-    os << std::left << std::setw(stulpelio_plotis(vardas_, 30)) << vardas_
-            << std::setw(stulpelio_plotis(pavarde_, 30)) << pavarde_
+    os << std::left << std::setw(stulpelio_plotis(Zmogus::vardas(), 30)) << Zmogus::vardas()
+            << std::setw(stulpelio_plotis(Zmogus::pavarde(), 30)) << Zmogus::pavarde()
             << std::setw(20) << vidurkis_val_
             << std::setw(20) << mediana_val_ << '\n';
 }

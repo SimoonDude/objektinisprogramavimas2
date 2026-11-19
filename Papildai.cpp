@@ -56,7 +56,7 @@ void generuoti_studentus (const int &paz_k, const int &k, const std::string &fai
     if (to_file) f.close();
 }
 
-bool get_name_input (Studentas& s) {
+bool get_name_input (Zmogus& s) {
     std::cin >> s.vardas_ >> s.pavarde_;
     if (s.vardas_ == "-1" || s.pavarde_ == "-1") {return 0;} else {return 1;}
 }
@@ -154,7 +154,7 @@ void kaip_rusiuoti (int &c) {
         try {
             c = stoi(choice);
             if (c == 1 || c == 2 || c == 3) {std::cout << '\n'; break;}
-            else {throw;}
+            // else {throw;}
         } catch (...) {
             std::cout << "\n\n\n"; continue;
         }
