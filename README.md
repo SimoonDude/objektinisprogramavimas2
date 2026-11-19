@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Objektinis programavimas — Studentų galutinių balų skaičiavimas
 
 ## Projekto aprašymas
