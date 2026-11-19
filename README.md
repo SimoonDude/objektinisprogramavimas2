@@ -36,6 +36,26 @@ Projekto metu realizuojamas studentų duomenų įvedimas, apdorojimas, grupavima
 6. Peržiūrėti apskaičiuotus rezultatus ir studentų suskirstymą į kategorijas.
 7. Jeigu norima, ištestuoti programos veikimo spartą su "Debug" pasirinkimu ir failais `benchmark-data/`.
 
+### Perkrautų (Overloadin'tų) funkcijų aprašymas
+
+| Implementacija | Aprašymas |
+|---|---|
+**spausdinti ()**
+|`void spausdinti (const std::vector<Studentas>& studentai);` | Spausdiname į terminalą; |
+|`void spausdinti (const std::vector<Studentas>& studentai, const std::string failo_pav, bool debug = false);` | Spausdiname į failą; |
+|`void spausdinti (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug = false);` | Spausdiname į failą (bet duodame `begin` ir `end` pointer'ius dėl greitesnio veikimo); |
+| `void Studentas::spausdinti (std::ostream& os) const;` | Išveda vieną `Studentas` objektą *(nelabai overloadinimas)*; |
+**Studentas ()**
+| `Studentas ()` | Bazinis. Priskiria egz_ = 0 ir nd_  į tuščią vektorių; |
+| `explicit Studentas (std::istream& is)` | Ima input stream'ą ir iš jo duomenų konstruoja `Studentas` objektą; |
+| `Studentas (const Studentas& other)` | Priskiria objekto `other` kintamuosius naujam objektui; basically labai panašu į operator= overloadinimui; |
+**operator=**
+| `Studentas& operator=(const Studentas& other)` | jeigu nevienodi šie, priskiria kiekvienam `this` Studentas objektui objekto `other` kintamuosius; |
+**operator>>**
+| `friend std::istream& operator>>(std::istream& is, Studentas& s)` | Iškviečia `readStudent(is)`; |
+**operator<<**
+| `friend std::ostream& operator<<(std::ostream& os, const Studentas& s)` | Iškviečia `spausdinti(s)` ir grąžina `os` |
+
 
 
 ## Studentų skirstymo strategijos
@@ -45,7 +65,8 @@ Studentai suskirstomi į dvi grupes pagal galutinio balo kriterijų:
 - **Vargšiukai** – studentai, kurių galutinis balas mažesnis už nustatytą ribą.
 - **Kietiakai** – studentai, kurių galutinis balas yra lygus ribai arba ją viršija.
 
-Skirstymo riba. Laikoma išlaikyta, jeigu
+### Skirstymo riba. 
+#### Laikoma "išlaikyta", jeigu
 
 $ vidurkis_{nd} * 0,4 + egzaminas * 0,6 \geq 5 $
 
