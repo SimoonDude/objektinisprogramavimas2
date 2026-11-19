@@ -91,6 +91,7 @@ void spausdinti_i_faila (const std::vector<Studentas>& studentai, const std::str
         std::cout << "neapvyko atidaryti failo: " << failo_pav << std::endl;
         return;
     }
+
     f << std::left << std::setw(30) << "Vardas"
          << std::setw(30) << "Pavarde"
          << std::setw(20) << "Galutinis (vid.)"
@@ -105,6 +106,29 @@ void spausdinti_i_faila (const std::vector<Studentas>& studentai, const std::str
         std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << " | " << failo_pav << " Failo rasymas uztruko: " << diff.count() << " s.\n";
     } 
+}
+
+void spausdinti_i_faila (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug) {
+    auto start = std::chrono::high_resolution_clock::now();
+    std::ofstream f(failo_pav);
+    if (!f.is_open()) {
+        std::cout << "neapvyko atidaryti failo: " << failo_pav << std::endl;
+        return;
+    }
+    f << std::left << std::setw(30) << "Vardas"
+         << std::setw(30) << "Pavarde"
+         << std::setw(20) << "Galutinis (vid.)"
+         << std::setw(20) << "Galutinis (med.)" << '\n';
+    f << std::string(100, '-') << '\n';
+    f << std::fixed << std::setprecision(2);
+    for (; begin != end; ++begin) {
+        f << *begin;
+    }
+    f.close();
+    if (debug) {
+        std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;
+        std::cout << " | " << failo_pav << " Failo rasymas uztruko: " << diff.count() << " s.\n";
+    }
 }
 
 void spausdinti_i_terminal (const std::vector<Studentas>& studentai) {
@@ -158,7 +182,7 @@ void sutvarkyti_studentus (std::vector<Studentas>& studentai, const int &k, std:
     } else if (k == 3) {
         auto start = std::chrono::high_resolution_clock::now();
 
-        auto middle = std::stable_partition(
+        auto middle = std::partition(
             studentai.begin(),
             studentai.end(),
             pagyrunas
@@ -166,8 +190,8 @@ void sutvarkyti_studentus (std::vector<Studentas>& studentai, const int &k, std:
 
         std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << " | Studentu skirstymas i dvi grupes uztruko: " << diff.count() << " s.\n";
-        spausdinti_i_faila(std::vector<Studentas>(studentai.begin(), middle), failo_pav + "_islaike.txt", 1);
-        spausdinti_i_faila(std::vector<Studentas>(middle, studentai.end()), failo_pav + "_neislaike.txt", 1);
+        spausdinti_i_faila(studentai.data(), studentai.data() + (middle - studentai.begin()), failo_pav + "_islaike.txt", true);
+        spausdinti_i_faila(studentai.data() + (middle - studentai.begin()), studentai.data() + studentai.size(), failo_pav + "_neislaike.txt", true);
     }
 }
 
@@ -182,14 +206,17 @@ void rusiuoti (std::vector<Studentas>& studentai, const int& c) {
 }
 
 void debugger (std::vector<Studentas>& studentai, const int& c) {
+    studentai.reserve(10000);
     skaityti_is_failo(studentai, "./benchmark-data/studentai10000.txt");
     sutvarkyti_studentus(studentai, 3, "10000", c);
     studentai.clear();
     std::cout << "\n";
+    studentai.reserve(100000);
     skaityti_is_failo(studentai, "./benchmark-data/studentai100000.txt");
     sutvarkyti_studentus(studentai, 3, "100000", c);
     studentai.clear();
     std::cout << "\n";
+    studentai.reserve(1000000);
     skaityti_is_failo(studentai, "./benchmark-data/studentai1000000.txt");
     sutvarkyti_studentus(studentai, 3, "1000000", c);
     studentai.clear();

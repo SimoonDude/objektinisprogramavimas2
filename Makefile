@@ -2,8 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2
 
 TARGET = studentai
-SOURCES = 2uzd.cpp
-HEADERS = Papildai.hpp Studentas.hpp
+SOURCES = 2uzd.cpp Studentas.cpp Papildai.cpp
+HEADERS = Papildai.hpp Studentas.hpp Dict.h
 
 $(TARGET): $(SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET)

@@ -7,6 +7,7 @@ std::istream& Studentas :: readStudent(std::istream& is) {
         return is;
     }
     std::vector<int> nd;
+    nd.reserve(20);
     int nd_value;
     while (is >> nd_value) {
         nd.push_back(nd_value);
@@ -24,9 +25,6 @@ std::istream& Studentas :: readStudent(std::istream& is) {
     egz_ = nd.back();
     nd.pop_back();
     nd_ = std::move(nd);
-
-    vidurkis();
-    mediana();
 
     return is;
 }
@@ -90,13 +88,11 @@ double Studentas::vidurkis () {
 double Studentas::mediana () { // ikelti funkcijas i struktura ?
     if (nd_.empty()) {mediana_val_ = egz_ * .6; return mediana_val_;}
     auto pazymiai = nd_;
-    sort(pazymiai.begin(), pazymiai.end());\
-    double mediana;
-    if (pazymiai.size() % 2 == 1) {
-        mediana = pazymiai[pazymiai.size() / 2];
-    } else {
-        size_t vidurys = pazymiai.size() / 2;
-        mediana = (pazymiai[vidurys - 1] + pazymiai[vidurys]) / 2.0;
+    const size_t vidurys = pazymiai.size() / 2;
+    std::nth_element(pazymiai.begin(), pazymiai.begin() + vidurys, pazymiai.end());
+    double mediana = pazymiai[vidurys];
+    if (pazymiai.size() % 2 == 0) {
+        mediana = (*std::max_element(pazymiai.begin(), pazymiai.begin() + vidurys) + mediana) / 2.0;
     }
     mediana_val_ = mediana * .4 + egz_ * .6;
     return mediana_val_;

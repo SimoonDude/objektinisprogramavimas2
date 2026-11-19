@@ -3,9 +3,31 @@
 
 using namespace std;
 
-int main() {
-    int c, k = 0, paz_k;
+int main(int argc, char* argv[]) {
+    int c, k = 0, r = 0, paz_k;
     string failo_pav = "0"; 
+    string duomenu_failas;
+
+    if (argc > 1) {
+        try {
+            c = stoi(argv[1]);
+            if (c !=  5) k = (argc > 2) ? stoi(argv[2]) : 0;
+            else r = (argc > 2) ? stoi(argv[2]) : 0;
+            if (c == 2 && argc > 3) duomenu_failas = argv[3];
+            if (c == 2 && argc > 4) failo_pav = argv[4];
+            if (c == 2 && argc > 5) r = stoi(argv[5]);
+            if (c == 4 && argc > 3) failo_pav = argv[3];
+            if ((c == 1 || c == 2 || c == 3 || c == 4 || c == 5) &&
+                ((k >= 1 && k <= 3) ||
+                (r >= 1 && r <= 3))) {
+                goto skip_menu;
+            } else {
+                cout << "Netinkamas argumentas. Naudokite default meniu.\n";
+            }
+        } catch (...) {
+            cout << "Netinkamas argumentas. Naudokite default meniu.\n";
+        }
+    }
 
     // gal iskelti meniu i papildus ar dar kur
     while (true) { // meniu
@@ -35,17 +57,18 @@ int main() {
             cout << "\n\n\n"; continue;
         }
     }
+    skip_menu: // skip menu if command line arguments are valid
     if (k == 2) {
-        cout << "Isvesties failo pavadinimas?:\n";
-        while (true) {
-            try {
+        if (argc <= 4) {
+            cout << "Isvesties failo pavadinimas?:\n";
+            while (true) {
                 cin >> failo_pav;
                 ofstream f(failo_pav);
-                if (!f.is_open()) throw;
-                else {f.close(); break;}
-            } catch (...) {
+                if (f.is_open()) {
+                    f.close();
+                    break;
+                }
                 cout << "nepavyko atidaryti failo: " << failo_pav << endl;
-                continue;
             }
         }
     }
@@ -68,15 +91,21 @@ int main() {
         while (true) if (!get_int_input(paz_k)) continue; else break;
     }
     else if (c == 2) { // pasirinkta skaityti is failo
-        string failo_pav;
-        system("cd"); system("dir *.txt");
-        cout << "iveskite duomenu failo pavadinima : "; cin >> failo_pav;
-        skaityti_is_failo(studentai, failo_pav);
+        if (duomenu_failas.empty()) {
+            cout << "iveskite duomenu failo pavadinima : ";
+            cin >> duomenu_failas;
+        }
+        skaityti_is_failo(studentai, duomenu_failas);
     }   
     else if (c == 5) {// Testavimas su dideliu studentu kiekiu
-        int r; kaip_rusiuoti(r);
+        if (r == 0) kaip_rusiuoti(r);
         debugger(studentai, r);
         // else if (l == 2) debugger(l_studentai, r);        
+        return 0;
+    }
+    if (c == 2 && r == 0) kaip_rusiuoti(r);
+    if (c == 2) {
+        sutvarkyti_studentus(studentai, k, failo_pav, r);
         return 0;
     }
     if (c == 4) { // jeigu pasirinkta generuoti viska

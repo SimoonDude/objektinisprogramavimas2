@@ -26,8 +26,8 @@ public:
     inline void setEgz (int egz) { egz_ = egz; }
     inline void setNd (const std::vector<int>& nd) { nd_ = nd; }
     // getters
-    inline std::string vardas () const { return vardas_; }
-    inline std::string pavarde () const { return pavarde_; }
+    inline const std::string& vardas () const { return vardas_; }
+    inline const std::string& pavarde () const { return pavarde_; }
     inline int egz () const { return egz_; }
     inline const std::vector<int>& nd () const { return nd_; }
     inline double vidurkis_val () const { return vidurkis_val_; }
