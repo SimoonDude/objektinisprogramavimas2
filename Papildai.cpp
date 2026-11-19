@@ -108,6 +108,7 @@ void spausdinti_i_faila (const std::vector<Studentas>& studentai, const std::str
     } 
 }
 
+// overloaded version -- more optimized
 void spausdinti_i_faila (const Studentas* begin, const Studentas* end, const std::string& failo_pav, bool debug) {
     auto start = std::chrono::high_resolution_clock::now();
     std::ofstream f(failo_pav);

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Objektinis programavimas — Studentų galutinių balų skaičiavimas
 
 ## Projekto aprašymas
@@ -9,40 +8,16 @@ Projekto metu realizuojamas studentų duomenų įvedimas, apdorojimas, grupavima
 
 ## Versijos ir jų pakeitimai
 
-### `v.pradinė`
-
-- Sukurta pradinė studentų duomenų apdorojimo programa. (su `std::vector`)
-- Realizuotas studento duomenų saugojimas naudojant `struct`.
-- Realizuotas namų darbų vidurkio ir medianos skaičiavimas.
-- Pridėtas kintamas namų darbų skaičius, atsitiktinių pažymių generavimas ir pasirinkimų meniu.
-- Pridėtas duomenų nuskaitymas iš failo.
-
-### `v0.1`
-
-
-- Studentai generuojami pagal geresnį algoritmą.
-- Studentai surūšiuojami pagal pasirinktą kriterijų.
-- Stulpeliai išlygiuojami, galutiniai balai pateikiami dviejų skaičių po kablelio tikslumu.
-
-### `v0.2`
-
-- Studentai skirstomi į išlaikiusius ir neišlaikiusius (pirmoji strategija).
-- Simplifikuota struktūra, iškeltas funkcionalumas į header'ius
-- Funkcionalumas algoritmų spartos matavimui
-- Studentų vardų, pavardžių generavimas, randominiam režime
-
-### `v0.3`
-
-- Realizuota antroji bei trečioji veikimo strategija.
-- Ištirtas `vector` ir `list` konteinerių veikimo efektyvumas; jų skirtumai.
-- Išbandyti skirtingi C++ algoritmai studentų skirstymo procedūrai optimizuoti.
-
-
 ### `v1.0`
 
 - Pasirinkta naudoti trečiąją strategiją.
 - Ištaisyti galutinės klaidos, galutinai testuota.
 - Parengtos programos kompiliavimo ir paleidimo instrukcijos.
+
+### `v1.1`
+
+- Pereita prie `class` tipo objekto studentas
+- Įvestos optimizacijos 
 
 ---
 
@@ -109,19 +84,6 @@ Skirstymo riba. Laikoma išlaikyta, jeigu
 
 $ vidurkis_{nd} * 0,4 + egzaminas * 0,6 \geq 5 $
 
-### 1 strategija – du nauji konteineriai
-
-Sukuriami nauji `vargsiukai` ir `kietiakai` konteineriai. Studentai nukopijuojami į atitinkamą grupę, o pradinis `studentai` konteineris lieka išsaugotas. 
-
-### 2 strategija – vienas naujas konteineris
-
-Sukuriamas tik `vargsiukai` konteineris. Silpnesni studentai perkeliami į jį, o iš pradinio konteinerio pašalinami. Po skirstymo pradiniame konteineryje lieka tik kietiakai. Tai išbandyta su `std::remove_copy_if` ir `vector::erase`.
-
-### 3 strategija – optimizuotas skirstymas
-
-Taikomi efektyvesni algoritmai arba konteinerių metodai, atsižvelgiant į ankstesnių strategijų rezultatus bei `vector` ir `list` ypatybes.
-Pasirinkta naudoti `std::partition`.
-
 ## Eksperimentų metodika
 
 Eksperimentų tikslas – palyginti skirtingų programos įgyvendinimų strategijų veikimo spartą ir įvertinti, kokią įtaką daro įvariūs algoritmai bei konteineriai.
@@ -147,43 +109,26 @@ Kiekviena strategija testuojama su tais pačiais duomenų rinkiniais. Kiekvienas
 
 Matavimo metu į laiką neįtraukiama įvairi informacijos manipuliacija (pvz.apskaičiavimas vidurkių) ar kitos operacijos, kurios nėra tiesiogiai susijusios su failais ar nėra intensyvios resursų ar laiko sąnaudos atžvilgiu.
 
+Kartu testuota ir kompiliatoriaus naudoti flag'ai ir jų prisidėjimas prie programos efektyvumo ar kt. Šalia nurodytas ir failo dydis, siekiant parodyti santykį tarp kompiliatoriaus optimizacijų ir failo dydžio.
+
 ### Rezultatai
 
-Projekto eigos metu buvo keletą kartų testuota įvairūs konteineriai ir strategijos (pvz. pirmoji) ir, kartu, rezultatai išsaugoti. Galima pamatyti juos čia:
-
-Laikas visur milisekundėmis (ms).
-
-| Įrašų skaičius | Skaitymas | Skirstymas | Įrašymas į failus |
-|---:|:---:|---:|---:|
-`std::vector`
-| 10 000 | 0.020024 | 0.002376 | 0.017435 |
-| 100 000 | 0.289048 | 0.021513 | 0.146705 |
-| 1 000 000 | 1.100530 | 0.178681 | 1.534361 |
-`std::list`
-| 10 000 | 0.027613 | 0.007547 | 0.012833 |
-| 100 000 | 0.288874 | 0.069823 | 0.125358 |
-| 1 000 000 | 1.074310 | 0.319281 | 1.670242 |
-
-#### Galutinių ezultatų palyginimas: `std::vector`
-
-| Įrašų skaičius | Skaitymas | Skirstymas | Įrašymas į failus |
+Rezultatai pateikiami lentelės pavidalu, išskirstyti naudotų studentų duomenų dydžiu ir pateiktas kiekvieno darbo punkto laikas sekundėmis.
+#### Dabar, naudojant klases (`class`):
+| Studentų skaičius | Skaitymas | Skirstymas | Rašymas |
 |---:|---:|---:|---:|
-| 10,000 | 0.017334 | 0.000008 | 0.013997 |
-| 100,000 | 0.192781 | 0.000515 | 0.119963 |
-| 1,000,000 | 1.243102 | 0.005943 | 1.348206 |
-
-#### Galutinių rezultatų palyginimas: `std::list`
-
-| Įrašų skaičius | Skaitymas | Skirstymas | Įrašymas į failus |
+| 10,000 | 0.014672 | 0.000006 | 0.011366 |
+| 100,000 | 0.262006 | 0.000207 | 0.107046 |
+| 1,000,000 | 0.928797 | 0.004769 | 1.071378 |
+#### Pirminė realizacija, naudojanti struktūras (`struct`):
+| Studentų skaičius | Skaitymas | Skirstymas | Rašymas |
 |---:|---:|---:|---:|
-| 10,000 | 0.023973 | 0.000119 | 0.011529 |
-| 100,000 | 0.250550 | 0.011444 | 0.129109 |
-| 1,000,000 | 1.226978 | 0.181761 | 1.566027 |
+| 10,000 | 0.022739 | 0.001209 | 0.013092 |
+| 100,000 | 0.257048 | 0.012539 | 0.129134 |
+| 1,000,000 | 1.402110 | 0.124734 | 1.315480 |
+## Išvados
 
-## Galutinės išvados
-
-Visų pirma, galima pastebėti, kad `std::vector` konteineris yra geriausias pasižymintis savo greičiu ir paprastumu. Antra, kad labai svarbi yra naudojama duomenų manipuliacijos strategija – nuo jos priklauso iki 20x efektyvumo pokytis.
-Galų gale galima paminėti šis projektas yra geras apšilimas vėlesniam darbui su C++.
+Pereiti prie klasių svarbu
 
 ### TODO
 
@@ -192,7 +137,3 @@ Norėčiau netolimoje ateityje pereiti prie `template`'u. Šiuo metu egzistuoja 
 ### Papildomi komentarai
 
 <img width="656" height="50" alt="{009B9741-B639-469F-80A3-92D4BEF856D2}" src="https://github.com/user-attachments/assets/6561230b-3892-4733-98d2-fe40ba4f4ff4" />
-=======
-# objektinisprogramavimas2
-Objektinis programavimas. Antroji užduotis.
->>>>>>> origin/main

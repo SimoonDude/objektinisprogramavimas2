@@ -18,7 +18,10 @@ private:
     double vidurkis_val_ = 0.0;
     double mediana_val_ = 0.0;
 public:
-    Studentas () = default; // default constructor, initializes egz_ to 0 and nd_ to an empty vector
+    Studentas () {
+        egz_ = 0;
+        nd_ = std::vector<int>();
+    }
     explicit Studentas (std::istream& is) { readStudent(is); }; // constructor that reads student data from an input stream
     // setters
     inline void setVardas (const std::string& vardas) { vardas_ = vardas; }
@@ -36,11 +39,6 @@ public:
     void randominiai_pazymiai (const int &k = 10); // generates random grades for the student
     void imti_random_varda_pavarde (dict& v_p); // assigns a random name and surname to the student
 
-    // i dont think i'll use this one
-    // why is vector<double> passed here? isn't it already a member of the class? maybe it's for flexibility, to allow calculating the final score based on different sets of grades, not just the member variable nd_.
-    // but in this case, it might be better to have a default parameter that uses nd_
-    // double galutinisBalas (double (*) () = vidurkis) const; // calculates the final score based on the provided function (default is average)
-
     // vidurkis and mediana defintions:
     double vidurkis ();
     double mediana ();
@@ -57,9 +55,8 @@ public:
 
     friend bool vargsunas (const Studentas& s);
     friend bool pagyrunas (const Studentas& s);
-    // finish writing the rest of the class definition,
-    // according to files 1uzd_def.h,
-    // including any necessary member functions and operators
+
+    ~Studentas () {}
 };
 
 bool get_int_input (int &balas, bool minusvienas = false); // paima int inputa is userio, grazina `True` jeigu pavyko; `False` jeigu ne.
